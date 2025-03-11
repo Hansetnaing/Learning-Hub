@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(121, 189, 121);
+    height: 50px;
+}
+
+header .text-logo{
+    display: flex;
+    color: white;
+}
+
+header .text-logo h2{
+    margin: 0 .5rem;
+}
+
+header .contact {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header .contact span {
+    font-size: 15px;
+}
+
+header .contact a{
+    text-decoration: none;
+    color: white;
+}
+
+header .contact a:hover{
+    text-decoration: underline;
+}
+
+header .contact span i {
+    font-size: 16px;
+}
+
+header .log-in p {
+    font-size: 16px;
+    color: white;
+}
+
+header .log-in p a {
+    text-decoration: none;
+    color: white;
+}
+
+header .log-in p a:hover {
+    text-decoration: underline;
+    transition: .5s;
+}
+
+.hamburger {
+    cursor: pointer;
+    font-size: 24px;
+    display: block;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: -250px; 
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0; 
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 20px;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar ul li a:hover {
+    color: rgb(121, 189, 121);
+}
+
+.login-main{
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    margin: 0;
+}
+
+.login-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-box .login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-box .login-button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: #ff0000;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.body-img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    position: relative;
+    height: 80vh;
+}
+
+.background-container {
+    background: url('../images/b4.png') no-repeat center center/cover;
+    width: 100%;
+    height: 80vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.body-text {
+    padding: 15px 20px;
+    position: absolute;
+    left: 10%;
+    top: 30%;
+    display: flex; 
+    flex-direction: column;
+}
+
+.body-text .text{
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    margin: .5rem;
+    color: white;
+    border-radius: 5px;
+}
+
+/* footer-start */
+.footer-start{
+    height: 35vh;
+    display: flex;
+    justify-content: space-around;
+    background-color: rgb(73, 62, 62);
+    padding: 40px 50px 30px 50px;
+}
+
+.footer-start .footer-box .footer-logo img{
+    width: 100px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.footer-start .footer-box h1{
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+.footer-start .footer-box p{
+    color: white;
+}
+
+#university-website, #contact-us{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.footer-start .footer-box .icon{
+    color: white;
+    margin-top: .5rem;
+}
+
+.footer-start .footer-box .icon a{
+    color: #28a745;
+}
+
+footer{
+    background-color: #080809;
+    padding: 20px 1.5rem;
+}
+
+footer p{
+    text-align: center;
+    color: #28a745;
+}
+
+/* footer-end */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+}

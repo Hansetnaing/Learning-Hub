@@ -1,0 +1,19 @@
+Students Table: Stores student information.
+
+Teachers Table: Stores teacher information.
+
+Classes Table: Stores class information.
+
+Enrollment Table: Links students to classes.
+
+Attendance Table: Tracks student attendance.
+
+Assignments Table: Stores assignments created by teachers.
+
+Student Submissions Table: Stores student submissions for assignments.
+
+Quizzes Table: Stores quizzes created by teachers.
+
+Quiz Questions Table: Stores questions for quizzes.
+
+Lecture Materials Table: Stores lecture materials uploaded by teachers.

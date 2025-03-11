@@ -1,0 +1,25 @@
+1. create table students(student_id int,first_name varchar(50),last_name varchar(50),date_of_birth date,enrollment_date date,grade decimal(5,2));
+
+2.
+delimiter //
+create procedure addStudent(in id int,in fName varchar(20), in lName varchar(50),in dob date, in enrollD date,in grd decimal(5,2))
+begin 
+insert into students(student_id, first_name, last_name, date_of_birth, enrollment_date, grade) values ( id, fName, lName, dob, enrollD, grd);
+end //
+
+
+3. ရိုက်လိုက်လို့ တက်နေရင်  "drop procedure addStudent;" ရေး
+delimiter //
+create procedure addStudent(in id int,in fName varchar(20), in lName varchar(50),in dob date, in enrollD date,in grd decimal(5,2))
+begin
+if grd between 0 and 100 then
+insert into students(student_id, first_name, last_name, date_of_birth, enrollment_date, grade) values ( id, fName, lName, dob, enrollD, grd);
+end if;
+end //
+
+5.  create trigger beforeInsertStudent
+before insert on students for each row
+begin
+if new.enrollment_date=null then set new.enrollment_date = CURDATE();
+end if;
+end//

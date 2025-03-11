@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <link href="b.html" rel="stylesheet">
+        <link rel="icon" href="images/medical-team.png">
+        <link rel="stylesheet" href="css/navbar.css">
+        <style>
+            *{
+                font-family: sans-serif;
+            }
+            h1{
+                text-align: center;
+                font-family:  sans-serif;
+                margin-bottom: 1rem;
+                margin-top: 2rem;
+            }
+            ul,li{
+                font-size: 20px;
+                font-weight: bold;
+                margin-left: 40px;
+                line-height: 30px;
+            }
+            .container{
+                width: 90%;
+                padding: 20px;
+                margin: 100px auto;
+                display: flex;
+                flex-direction: row;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            .box{
+                width: 200px;
+                margin: 0px 10px;
+                box-shadow: 0 0 20px 2px rgba(0, 0, 0, 1);
+                transition: 1s;
+                border-radius: 5px;
+                grid-template-rows: repeat(2,3);
+            }
+            .box img{
+                display: block;
+                width: 100%;
+                border-radius: 5px;
+            }
+            .box:hover{
+                transform: scale(2,2);
+                z-index: 5;
+
+            }
+            figcaption{
+                font-size: 20px;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .footer{
+                background-color: lightblue;
+                border-top: var(--border-color);
+                position: relative;
+                bottom: 0; left: 0; right: 0;
+                text-align: center;
+                font-size: 1.3rem;
+                padding: 1rem 1rem;
+                color:var(--text-color);
+                margin-top: 1rem;
+                z-index: 1000;
+                font-size: 12px;
+            }
+            .footer span{
+                color: white;
+                font-size: 15px;
+            }       
+  </style>
+    </head>
+    <body>
+        <div><img src="images/better-health.png" class="logo"></div>
+        <div class="nav">
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">ABOUT &dtrif;</a>
+                <div class="dropdown-content">
+                  <a href="physicalhealth.html">Physical Health</a>
+                  <a href="mentalhealth.html">Mental Health</a>
+                </div>
+            </li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="review.html">REVIEW</a></li>
+        </ul>
+    </div>
+    <div>
+        <h1>SIGN OF STRESS</h1>
+        <ul>
+            <li>These signs are not always universal. Some people may show behavioral changes, while others show physical symptoms.</li>
+            <li>Men and women can also exhibit signs of depression differently.</li>
+            <li>However, if you recognize any of these signs for more than several days in yourself, a friend, or a family member, <br>seeking help should always be your first step so you can get them the care they need.</li>
+        </ul>
+ 
+    </div>
+        <div class="container">
+        <div class="box">
+            
+            <img src="images/sk.jpg"  height="230"><figcaption>Skin diseases</figcaption>
+        </div>
+
+        <div class="box">
+            <img src="images/he.jpg"  height="230"><figcaption>Headache</figcaption>
+        </div>
+
+        <div class="box">
+            <img src="images/ill.jpg"  height="230"><figcaption>Frequent illness</figcaption>
+        </div>
+
+        <div class="box">
+            <img src="images/diff.jpg"  height="230"><figcaption>Difficulty concentrating</figcaption>
+        </div>
+
+        <div class="box">
+            <img src="images/hair.jpg"  height="230"><figcaption>Hair loss</figcaption>
+        </div>
+
+        <div class="box">
+            <img src="images/sleep.jpg"  height="230"><figcaption>Inability to sleep</figcaption>
+        </div>
+
+       </div>
+    </figure>
+    <footer class="footer">
+        &copy; 2024 by <span>CUMYEIK SECOND YEAR GROUP-VII</span> 
+     </footer>
+    </body>
+</html>

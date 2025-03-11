@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int hours,minutes;
+    cout << "Enter a hour :";
+    cin >> hours ;
+    cout << "\nEnter a minute :";
+    cin >> minutes;
+    int total_minutes=hours*60+minutes;
+    cout << "\nTotal Minutes=" << total_minutes << "minutes"<< endl;
+
+    cout << "\nEnter a minute :";
+    cin >> minutes;
+    int total_hour=minutes/60;
+    minutes=minutes%60;
+    cout << "\nTotal Hour and Minute:" << total_hour << "hour"<< minutes<< "minutes" << endl;
+
+    int width,height,perimeter;
+    cout << "\nWidth of rectangle:";cin >> width;
+    cout << "\nHeight of rectangle:";cin >> height;
+    perimeter=2*(width+height);
+    cout << "\nThe perimeter of rectangle:"<< perimeter<< endl;
+    return 0;
+}

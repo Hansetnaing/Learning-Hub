@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+* {
+    scrollbar-width: thin; 
+    scrollbar-color: #888 #f1f1f1; 
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 80px; 
+}
+
+.sidebar {
+    width: 280px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    height: calc(100vh - 80px); 
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.static-item {
+    flex-shrink: 0; 
+    padding-bottom: 20px; 
+    border-bottom: 1px solid #444;
+    margin-top: 20px;
+}
+
+.scrollable-items {
+    flex-grow: 1; 
+    overflow-y: auto;  
+}
+
+.sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar ul li a:hover {
+    color: #f1c40f;
+}
+
+.static-item {
+    flex-shrink: 0;
+}
+
+.scrollable-items {
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; 
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.container .class-btn{
+    display: flex;
+}
+
+.container .class-btn .btn {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 1.5rem;
+    background-color: #28a745;
+    color: white;
+    margin-right: 10px;
+}
+
+.container .btn:hover {
+    background-color: #33be54;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1001; 
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+
+.modal-content input, 
+.modal-content textarea, 
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal-content button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background: #218838;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+/* Modal Styles */
+.editModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.edit-content {
+    position: absolute;
+    left: 40%;
+    top: 20%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+
+.edit-content input,
+.edit-content textarea,
+.edit-content button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.edit-content button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-content button:hover {
+    background: #218838;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* Sections */
+section {
+    margin-bottom: 30px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+hr {
+    border: 1px solid #ddd;
+}
+
+/* Cards */
+.assignment, .lecture {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: white;
+}
+
+.link{
+    text-decoration: none;
+}
+
+.link:hover{
+    text-decoration: underline;
+}
+
+.delup-btn{
+    display: flex;
+}
+
+.edit {
+    color: #28a745; 
+    font-size: 20px; 
+    margin-right: 10px; 
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.edit:hover {
+    color: #218838; 
+}
+
+.delete {
+    color: #dc3545; 
+    font-size: 20px;
+    background: none; 
+    border: none; 
+    outline: none; 
+    padding: 0; 
+    cursor: pointer; 
+}
+
+.delete:hover {
+    color: #c82333; 
+}
+
+/* Table Styles */
+
+.asstitle{
+    margin-top: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+table tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+table td a:hover {
+    text-decoration: underline;
+    color: #218838;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    table th,
+    table td {
+        min-width: 120px;
+    }
+}

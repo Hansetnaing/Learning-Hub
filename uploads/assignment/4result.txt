@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+            window.addEventListener("load",function (event){
+                var get1 = sessionStorage.getItem("type");
+            document.getElementById("a").innerHTML = get1;
+
+            var get2 = sessionStorage.getItem("salary");
+            document.getElementById("b").innerHTML = get2;
+
+            var get3 = sessionStorage.getItem("overHr");
+            document.getElementById("c").innerHTML = get3;
+
+            var get4 = sessionStorage.getItem("overpay");
+            document.getElementById("d").innerHTML = get4;
+
+            var get5 = sessionStorage.getItem("netpay");
+            document.getElementById("e").innerHTML = get5;
+            });
+    </script>
+</head>
+<body>
+    <h1>Employee Information</h1>
+    <p>Employee type: <span id="a"></span><br>
+    Basic Salary: <span id="b"></span><br>
+    Overtime Hours: <span id="c"></span><br>
+    Overtime Pay: <span id="d"></span><br>
+    Net Pay: <span id="e"></span></p>
+</body>
+</html>
