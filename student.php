@@ -127,6 +127,10 @@ if (isset($_GET['logout'])) {
                 <p style="color: green;"><?php echo $success; ?></p>
             <?php endif; ?>
 
+            <?php if (isset($error)): ?>
+                <p style="color: red;"><?php echo $error; ?></p>
+            <?php endif; ?>
+
             <button type="submit" name="update" class="update-button">Change Password</button>
         </form>
     </div>

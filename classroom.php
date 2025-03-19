@@ -265,6 +265,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
             <?php if (isset($success)): ?>
                 <p style="color: green;"><?php echo $success; ?></p>
             <?php endif; ?>
+            
+            <?php if (isset($error)): ?>
+                <p style="color: red;"><?php echo $error; ?></p>
+            <?php endif; ?>
 
             <button type="submit" name="update" class="update-button">Change Password</button>
         </form>

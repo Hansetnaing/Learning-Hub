@@ -40,23 +40,19 @@ if (isset($_POST['update'])) {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if (!empty($new_password)) {
-        if ($new_password === $confirm_password) {
-            $sql = "update teacher set name='$tname', password='$new_password' where teacher_id='$teacher_id'";
-        } else {
-            $_SESSION['error'] = "Passwords do not match!";
-            $_SESSION['modal_open'] = true;
-            header("Location: teacher.php");
-            exit();
-        }
-    } else {
+    if ($new_password !== $confirm_password) {
+        $error = "Passwords do not match.";
+    } 
+    else {
         $sql = "update teacher set name='$tname' where teacher_id='$teacher_id'";
+        if (mysqli_query($con, $sql)) {
+            $success = "Password change successfully!";        
+        } else {
+            $error = "Failed to update profile.";
+        }
     }
-    if (mysqli_query($con, $sql)) {
-        $success = "Password change successfully!";        
-    } else {
-        $error = "Failed to update profile.";
-    }
+    
+    
 }
 
 if (isset($_GET['logout'])) {
@@ -146,6 +142,10 @@ if (isset($_GET['logout'])) {
                 <p style="color: green;"><?php echo $success; ?></p>
             <?php endif; ?>
 
+            <?php if (isset($error)): ?>
+                <p style="color: red;"><?php echo $error; ?></p>
+            <?php endif; ?>
+
             <button type="submit" name="update" class="update-button">Change Password</button>
         </form>
     </div>
@@ -153,7 +153,7 @@ if (isset($_GET['logout'])) {
     <div id="createGroupModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
-            <h2>Create Group</h2>
+            <h2>Create Class</h2>
             <form action="" method="post">
                 <input type="text" name="cname" placeholder="Enter Class Name" style="width: 100%; padding: 10px; margin-top: 10px;">
                 <input type="text" name="year" placeholder="Enter Year" style="width: 100%; padding: 10px; margin-top: 10px;">

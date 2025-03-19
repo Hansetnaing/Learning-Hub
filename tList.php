@@ -53,7 +53,7 @@
                 <input type="submit" name="submit" value="Search">
                 </div>
                 </form>
-            <input type="text" id="searchBar" onkeyup="searchStudent()" placeholder="Search for students...">
+            <input type="text" id="searchBar" onkeyup="searchStudent()" placeholder="Search for teachers...">
             </div>
 
             <table id="studentTable">
