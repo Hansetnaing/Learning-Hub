@@ -136,21 +136,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
-    $new_name = $_POST['name'];
+
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if ($new_password !== $confirm_password) {
+    // Server-side password validation
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).{8,}$/', $new_password)) {
+        $error = "Password must be at least 8 characters with uppercase, lowercase, number, and special character.";
+    }
+    elseif ($new_password !== $confirm_password) {
         $error = "Passwords do not match.";
-    } else {
-        $update_query = "UPDATE student SET password='$new_password' WHERE student_id='$student_id'";
-        if (mysqli_query($con, $update_query)) {
-            $success = "Profile updated successfully!";
-            $query = mysqli_query($con, $select);
-            $user = mysqli_fetch_assoc($query);
+    }
+    else {
+        // Hash password (REAL-WORLD SECURITY)
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+        // Prepared statement (prevent SQL Injection)
+        $stmt = $con->prepare("UPDATE student SET password=? WHERE student_id=?");
+        $stmt->bind_param("si", $hashed_password, $student_id);
+
+        if ($stmt->execute()) {
+            $success = "Password changed successfully!";
         } else {
-            $error = "Failed to update profile.";
+            $error = "Failed to change password.";
         }
+
+        $stmt->close();
     }
 }
 
@@ -261,6 +272,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
 
             <label for="confirm_password">Confirm New Password:</label>
             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
+
+            <ul id="passwordRules" style="list-style:none; padding-left:0; font-size:14px; display:none;">
+                <li id="rule-length">❌ At least 8 characters</li>
+                <li id="rule-upper">❌ At least one uppercase letter</li>
+                <li id="rule-lower">❌ At least one lowercase letter</li>
+                <li id="rule-number">❌ At least one number</li>
+                <li id="rule-special">❌ At least one special character (@$!%*?&#)</li>
+            </ul>
             
             <?php if (isset($success)): ?>
                 <p style="color: green;"><?php echo $success; ?></p>
@@ -274,5 +293,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
         </form>
     </div>
 <script src="js/edit.js"></script>
+<?php if (isset($success) || isset($error)): ?>
+<script>
+    sessionStorage.setItem('modalState', 'open');
+</script>
+<?php endif; ?>
 </body>
 </html>
