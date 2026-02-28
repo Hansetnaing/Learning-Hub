@@ -292,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
             <button type="submit" name="update" class="update-button">Change Password</button>
         </form>
     </div>
-<script src="js/edit.js"></script>
+<!-- <script src="js/edit.js"></script> -->
 <?php if (isset($success) || isset($error)): ?>
 <script>
     sessionStorage.setItem('modalState', 'open');
