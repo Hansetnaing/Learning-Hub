@@ -6,6 +6,11 @@ if (!isset($_SESSION['s_id'])) {
     exit;
 }
 
+// Generate CSRF token if not exists
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 require 'dbConnect.php';
 
 // Check if class_id and student_id are provided in the URL
@@ -13,7 +18,8 @@ if (!isset($_GET['class_id']) || !isset($_GET['student_id'])) {
     die("Class ID or Student ID not provided.");
 }
 
-$class_id = $_GET['class_id'];
+$class_id = trim($_GET['class_id']);
+$class_id = intval($class_id);
 $student_id = $_GET['student_id'];
 
 $select = "SELECT * FROM student WHERE student_id='$student_id'";
@@ -55,7 +61,7 @@ if (!$assignments_result) {
 $assignments = mysqli_fetch_all($assignments_result, MYSQLI_ASSOC);
 
 if (!$assignments) {
-    $assignments = []; 
+    echo count($assignments);
 }
 
 $lecture_query = "select * from lecture where class_id= '$class_id' order by lecture_id desc;";

@@ -2,41 +2,111 @@
 session_start();
 require 'dbConnect.php';
 
+if (!isset($_SESSION['attempts'])) {
+    $_SESSION['attempts'] = 0;
+}
+
+if (!isset($_SESSION['last_attempt'])) {
+    $_SESSION['last_attempt'] = time();
+}
+
+$remaining_time = 0;
+$lock_time = 0;
+
+/* ===== Exponential Lock Policy ===== */
+if ($_SESSION['attempts'] >= 9) {
+    $lock_time = 300;
+} elseif ($_SESSION['attempts'] >= 6) {
+    $lock_time = 60;
+} elseif ($_SESSION['attempts'] >= 3) {
+    $lock_time = 15;
+}
+
+if ($lock_time > 0) {
+    $elapsed = time() - $_SESSION['last_attempt'];
+
+    if ($elapsed < $lock_time) {
+        $remaining_time = $lock_time - $elapsed;
+    } else {
+        $_SESSION['attempts'] = 0;
+    }
+}
+
 if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $pw = $_POST['pw'];
 
-    $name = mysqli_real_escape_string($con, $name);
-    $pw = mysqli_real_escape_string($con, $pw);
+    // If account locked
+    if ($remaining_time > 0) {
+        // $error = "Too many failed attempts. Please wait {$remaining_time} seconds.";
+    } else {
 
-    if ($name == 'admin' && $pw == '123123') {
-        header("Location: admin.php");
-        exit;
+        $name = trim($_POST['name']);
+        $pw   = trim($_POST['pw']);
+
+        // ===== Admin Login =====
+        if ($name === 'admin' && $pw === '123123') {
+            session_regenerate_id(true);
+            $_SESSION['role'] = 'admin';
+            $_SESSION['attempts'] = 0;
+            header("Location: admin.php");
+            exit;
+        }
+
+        // ===== STUDENT LOGIN =====
+        $query = "SELECT student_id, name, password 
+                  FROM student 
+                  WHERE name='$name'";
+
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result) == 1) {
+
+            $rows = mysqli_fetch_assoc($result);
+
+            if ($pw == $rows['password']) {
+
+                session_regenerate_id(true);
+
+                $_SESSION['s_id'] = $rows['student_id'];
+                $_SESSION['name'] = $rows['name'];
+                $_SESSION['password'] = $rows['password'];
+                $_SESSION['role'] = 'student';
+                $_SESSION['attempts'] = 0;
+
+                header("Location: checkstu.php");
+                exit();
+            }
+        }
+
+        // ===== TEACHER LOGIN =====
+        $stmt2 = $con->prepare("SELECT teacher_id, name, password FROM teacher WHERE name=?");
+        $stmt2->bind_param("s", $name);
+        $stmt2->execute();
+        $result2 = $stmt2->get_result();
+
+        if ($result2->num_rows == 1) {
+
+            $rows2 = $result2->fetch_assoc();
+
+            if ($pw === $rows2['password']) {
+
+                session_regenerate_id(true);
+
+                $_SESSION['t_id'] = $rows2['teacher_id'];
+                $_SESSION['name'] = $rows2['name'];
+                $_SESSION['password'] = $rows2['password'];
+                $_SESSION['role'] = 'teacher';
+                $_SESSION['attempts'] = 0;
+
+                header("Location: check.php");
+                exit;
+            }
+        }
+
+        // ===== Login Failed =====
+        $_SESSION['attempts'] += 1;
+        $_SESSION['last_attempt'] = time();
+        $error = "Username or Password is incorrect!";
     }
-
-    $query = "select name, password from student where name='$name' AND password='$pw'";
-    $ret = mysqli_query($con, $query);
-
-    if (mysqli_num_rows($ret) == 1) {
-        $rows = mysqli_fetch_assoc($ret);
-        $_SESSION['name'] = $rows['name'];
-        $_SESSION['password'] = $rows['password'];
-        header("Location: checkstu.php");
-        exit;
-    }
-
-    $query1 = "select name, password from teacher where name='$name' AND password='$pw'";
-    $ret1 = mysqli_query($con, $query1);
-
-    if (mysqli_num_rows($ret1) == 1) {
-        $rows1 = mysqli_fetch_assoc($ret1);
-        $_SESSION['name'] = $rows1['name'];
-        $_SESSION['password'] = $rows1['password'];
-        header("Location: check.php");
-        exit;
-    }
-
-    $error = "Username or Password is incorrect!";
 }
 ?>
 
@@ -81,14 +151,25 @@ if (isset($_POST['submit'])) {
     <div class="login-main">
         <div class="login-box">
             <h2>Learning Hub<br>Login</h2>
-            <form actiion="" method="post">
+            <form action="" method="post">
                 <input type="text" placeholder="Username" name="name" required>
                 <input type="password" placeholder="Password" name="pw" required>
-                <!-- <a href="#" class="forgot-password">Forgotten your username or password?</a> -->
+
                 <?php if (isset($error)): ?>
                     <div class="error-message"><?php echo $error; ?></div>
                 <?php endif; ?>
-                <button type="submit" name="submit" class="login-button">Log in</button>
+
+                <?php if ($remaining_time > 0): ?>
+                    <div class="error-message" id="lockMessage">
+                        Too many failed attempts. Please wait 
+                        <span id="countdown"><?php echo $remaining_time; ?></span> seconds.
+                    </div>
+                <?php endif; ?>
+
+                <button type="submit" name="submit" class="login-button"
+                    <?php if ($remaining_time > 0) echo 'disabled'; ?>>
+                    Log in
+                </button>
             </form>
         </div>
     </div>
@@ -126,6 +207,38 @@ if (isset($_POST['submit'])) {
         </footer>
     </section>
     <!-- footer-end  -->
+
+<?php if ($remaining_time > 0): ?>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let timeLeft = <?php echo (int)$remaining_time; ?>;
+    let countdownElement = document.getElementById("countdown");
+    let loginButton = document.querySelector(".login-button");
+    let lockMessage = document.getElementById("lockMessage");
+
+    if (!countdownElement) return;
+
+    countdownElement.innerText = timeLeft;
+
+    let timer = setInterval(function () {
+
+        timeLeft--;
+
+        if (timeLeft > 0) {
+            countdownElement.innerText = timeLeft;
+        } else {
+            clearInterval(timer);
+            loginButton.disabled = false;
+            lockMessage.innerHTML = 
+                "You can try logging in again now.";
+        }
+
+    }, 1000);
+
+});
+</script>
+<?php endif; ?>
 
 </body>
 <script src="./js/aside.js"></script>
