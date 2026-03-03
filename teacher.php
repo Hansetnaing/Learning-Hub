@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
         $error = "Passwords do not match.";
     }
     else {
-        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $hashed_password = $new_password;
 
         $stmt = $con->prepare("UPDATE student SET password=? WHERE student_id=?");
         $stmt->bind_param("si", $hashed_password, $student_id);

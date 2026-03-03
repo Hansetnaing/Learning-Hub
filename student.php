@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     }
     else {
         // Hash password (REAL-WORLD SECURITY)
-        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $hashed_password = $new_password;
 
         // Prepared statement (prevent SQL Injection)
         $stmt = $con->prepare("UPDATE student SET password=? WHERE student_id=?");
